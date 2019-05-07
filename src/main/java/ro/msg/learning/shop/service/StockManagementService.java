@@ -22,13 +22,13 @@ public class StockManagementService {
         return repositoryFactory.createStockRepository().findAll();
     }
 
-    @Transactional
+    /*@Transactional
     public Stock addStock(Product product, Location location, Integer quantity){
         return repositoryFactory.createStockRepository().save(
                 new Stock(product, location, quantity)
         );
     }
-
+    */
     @Transactional
     public void removeStock(int id){
         StockRepository repo = repositoryFactory.createStockRepository();

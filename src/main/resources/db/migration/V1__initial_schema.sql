@@ -82,6 +82,34 @@ create table if not exists address(
     primary key (addressId)
 );
 
+create table if not exists stock_product(
+    id int auto_increment,
+    stockId int,
+    productId int,
+    primary key (id)
+);
+
+create table if not exists stock_location(
+    id int auto_increment,
+    stockId int,
+    locationId int,
+    primary key (id)
+);
+
+create table if not exists orderDetail_order(
+    id int auto_increment,
+    orderDetailId int,
+    orderId int,
+    primary key (id)
+);
+
+create table if not exists orderDetail_product(
+    id int auto_increment,
+    orderDetailId int,
+    productId int,
+    primary key (id)
+);
+
 alter table orders
 add foreign key (customerId) references customer(customerId);
 
