@@ -5,10 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import ro.msg.learning.shop.repository.CustomerRepository;
-import ro.msg.learning.shop.repository.LocationRepository;
-import ro.msg.learning.shop.repository.OrderRepository;
-import ro.msg.learning.shop.repository.RepositoryFactory;
+import ro.msg.learning.shop.repository.*;
 
 import javax.persistence.EntityManager;
 
@@ -17,6 +14,11 @@ import javax.persistence.EntityManager;
 @ConditionalOnProperty(name = "repo-type", havingValue = "jpa")
 public class HibernateRepositoryFactory implements RepositoryFactory {
     private final EntityManager entityManager;
+
+    @Override
+    public AddressRepository createAddressRepository() {
+        return new HibernateAddressRepository(entityManager);
+    }
 
     @Override
     public CustomerRepository createCustomerRepository() {
@@ -29,5 +31,35 @@ public class HibernateRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
+    public ProductCategoryRepository createProductCategoryRepository() {
+        return new HibernateProductCategoryRepository(entityManager);
+    }
+
+    @Override
+    public ProductRepository createProductRepository() {
+        return new HibernateProductRepository(entityManager);
+    }
+
+    @Override
+    public RevenueRepository createRevenueRepository() {
+        return new HibernateRevenueRepository(entityManager);
+    }
+
+    @Override
+    public StockRepository createStockRepository() {
+        return new HibernateStockRepository(entityManager);
+    }
+
+    @Override
+    public SupplierRepository createSupplierRepository() {
+        return new HibernateSupplierRepository(entityManager);
+    }
+
+    @Override
     public LocationRepository createLocationRepository() { return new HibernateLocationRepository(entityManager); }
+
+    @Override
+    public OrderDetailRepository createOrderDetailRepository() {
+        return new HibernateOrderDetailRepository(entityManager);
+    }
 }

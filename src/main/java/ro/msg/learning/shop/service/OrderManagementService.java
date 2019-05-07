@@ -3,6 +3,7 @@ package ro.msg.learning.shop.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ro.msg.learning.shop.entity.Address;
 import ro.msg.learning.shop.entity.Customer;
 import ro.msg.learning.shop.entity.Location;
 import ro.msg.learning.shop.entity.Orders;
@@ -24,9 +25,9 @@ public class OrderManagementService {
     }
 
     @Transactional
-    public Orders addOrder(Location location, Customer customer, LocalDateTime createdAt, String country, String city, String county, String streetAddress){
+    public Orders addOrder(Location location, Customer customer, LocalDateTime createdAt, Address address){
         return repositoryFactory.createOrderRepository().save(new Orders(
-               location, customer, createdAt, country, city, county, streetAddress
+               location, customer, createdAt, address
         ));
     }
 

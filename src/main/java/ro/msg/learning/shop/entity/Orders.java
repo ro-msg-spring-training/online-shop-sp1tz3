@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Entity
@@ -17,24 +16,21 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
     @ManyToOne
-    @JoinColumn(name = "locationId", referencedColumnName = "locationId")
+    @JoinColumn(name = "shippedFrom", referencedColumnName = "locationId")
     private Location location;
     @ManyToOne(optional = false)
     @JoinColumn(name = "customerId", referencedColumnName = "customerId")
     private Customer customer;
     private LocalDateTime createdAt;
-    private String country;
-    private String city;
-    private String county;
-    private String streetAddress;
 
-    public Orders(Location location, Customer customer, LocalDateTime createdAt, String country, String city, String county, String streetAddress){
+    @ManyToOne
+    @JoinColumn(name = "addressId", referencedColumnName = "addressId")
+    private Address address;
+
+    public Orders(Location location, Customer customer, LocalDateTime createdAt, Address address){
         this.location= location;
         this.customer = customer;
         this.createdAt = createdAt;
-        this.country = country;
-        this.city = city;
-        this.county = county;
-        this.streetAddress = streetAddress;
+        this.address = address;
     }
 }
