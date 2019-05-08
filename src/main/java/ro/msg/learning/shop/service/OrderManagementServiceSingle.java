@@ -2,25 +2,25 @@ package ro.msg.learning.shop.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ro.msg.learning.shop.entity.Address;
-import ro.msg.learning.shop.entity.Orders;
-import ro.msg.learning.shop.entity.Stock;
+import org.springframework.transaction.annotation.Transactional;
+import ro.msg.learning.shop.entity.*;
 import ro.msg.learning.shop.repository.RepositoryFactory;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class OrderManagementServiceSingle implements OrderStrategy {
+public class OrderManagementServiceSingle{
     private final RepositoryFactory repositoryFactory;
 
-    @Override
-    public Orders createOrder(LocalDateTime timestamp, Address deliveryAddress, Map<Integer, Integer> products) {
-        List<Stock> stocks = repositoryFactory.createStockRepository().findAll();
-        boolean containsAll = false;
-
+    @Transactional
+    public Orders createOrder() {
+        ArrayList<Location> locations = new ArrayList<>(repositoryFactory.createLocationRepository().findAll());
+        locations.forEach(l->
+                System.out.println(l.getName())
+        );
         return null;
     }
 }

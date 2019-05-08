@@ -1,4 +1,4 @@
-package ro.msg.learning.shop.repository.jpa;
+package ro.msg.learning.shop.repository.hibernate;
 
 import lombok.RequiredArgsConstructor;
 import ro.msg.learning.shop.entity.Revenue;

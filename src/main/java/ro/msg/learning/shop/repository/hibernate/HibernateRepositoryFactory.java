@@ -1,9 +1,7 @@
-package ro.msg.learning.shop.repository.jpa;
+package ro.msg.learning.shop.repository.hibernate;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import ro.msg.learning.shop.repository.*;
 
@@ -11,7 +9,7 @@ import javax.persistence.EntityManager;
 
 @Component
 @RequiredArgsConstructor
-@ConditionalOnProperty(name = "repo-type", havingValue = "jpa")
+@ConditionalOnProperty(name = "repo-type", havingValue = "hibernate")
 public class HibernateRepositoryFactory implements RepositoryFactory {
     private final EntityManager entityManager;
 
