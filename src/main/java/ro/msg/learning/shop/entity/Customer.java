@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,6 +21,9 @@ public class Customer {
     private String username;
     private String password;
     private String emailAddress;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Orders> orders;
 
     public Customer(String firstName, String lastName, String username, String password, String emailAddress){
         this.firstName = firstName;

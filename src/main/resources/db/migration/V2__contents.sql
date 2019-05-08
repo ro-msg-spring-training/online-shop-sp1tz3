@@ -21,3 +21,6 @@ insert into location values (3,'apartamentul ala furat', 2);
 insert into product values (1,'pc','merge bine',5000,11.4,1,2,'google ceva');
 insert into product values (2,'masini unelte','furate din bulgaria',12000,1500, 2, 3,'nu le am cu masinile');
 insert into product values (3,'comoara','comoara ascunsa a lui nefertiti',9999999,99999,3,2,'eh');
+
+insert into stock values (1, 2, 3, 20);
+

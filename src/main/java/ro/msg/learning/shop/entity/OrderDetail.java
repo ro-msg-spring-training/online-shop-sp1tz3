@@ -16,22 +16,22 @@ public class OrderDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderDetailId;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "orderDetail_order",
-    joinColumns = {@JoinColumn(name = "orderDetailId")},
-    inverseJoinColumns = {@JoinColumn(name = "orderId")})
-    private List<Orders> orders;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "orderDetail_product",
-    joinColumns = {@JoinColumn(name = "orderDetailId")},
-    inverseJoinColumns = {@JoinColumn(name = "productId")})
-    private List<Product> products;
+    @ManyToOne
+    @JoinColumn(name = "orderId", referencedColumnName = "orderId")
+    private Orders order;
+
+
+    @ManyToOne
+    @JoinColumn(name = "productId", referencedColumnName = "productId")
+    private Product product;
+
+
     private Integer quantity;
 
-    public OrderDetail(List<Orders> orders, List<Product> products, Integer quantity){
-        this.orders = orders;
-        this.products= products;
+    public OrderDetail(Orders order, Product product, Integer quantity){
+        this.order = order;
+        this.product= product;
         this.quantity = quantity;
     }
 }

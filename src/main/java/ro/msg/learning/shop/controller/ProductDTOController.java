@@ -11,23 +11,23 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class ProductDTOController {
-    private final ProductDTOManagementService repo;
+    private final ProductDTOManagementService service;
 
     @GetMapping("/products")
     List<ProductDTO> all(){
-        return repo.listProducts();
+        return service.listProducts();
     }
 
     @PostMapping("/products")
     ProductDTO newProduct(@RequestBody ProductDTO newProductDTO){
-        return repo.create(
+        return service.create(
                 newProductDTO
         );
     }
 
     @PutMapping("/products")
     ProductDTO updateProduct(@RequestBody ProductDTO newProduct){
-        return (repo.update(
+        return (service.update(
                 newProduct.getId(),
                 newProduct.getName(),
                 newProduct.getDescription(),
@@ -41,11 +41,11 @@ public class ProductDTOController {
 
     @GetMapping("/products/{id}")
     ProductDTO readById(@PathVariable int id){
-        return repo.readById(id);
+        return service.readById(id);
     }
 
     @DeleteMapping("/products/{id}")
     void deleteProduct(@PathVariable int id){
-        repo.delete(id);
+        service.delete(id);
     }
 }

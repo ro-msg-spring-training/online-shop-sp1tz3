@@ -35,8 +35,8 @@ create table if not exists supplier(
 
 create table if not exists stock(
     stockId int not null,
-    productId int not null,
-    locationId int not null,
+    productId int,
+    locationId int,
     quantity int,
     primary key (stockId)
 );
@@ -82,33 +82,6 @@ create table if not exists address(
     primary key (addressId)
 );
 
-create table if not exists stock_product(
-    id int auto_increment,
-    stockId int,
-    productId int,
-    primary key (id)
-);
-
-create table if not exists stock_location(
-    id int auto_increment,
-    stockId int,
-    locationId int,
-    primary key (id)
-);
-
-create table if not exists orderDetail_order(
-    id int auto_increment,
-    orderDetailId int,
-    orderId int,
-    primary key (id)
-);
-
-create table if not exists orderDetail_product(
-    id int auto_increment,
-    orderDetailId int,
-    productId int,
-    primary key (id)
-);
 
 alter table orders
 add foreign key (customerId) references customer(customerId);
@@ -118,12 +91,6 @@ add foreign key (shippedFrom) references location(locationId);
 
 alter table revenue
 add foreign key (locationId) references location(locationId);
-
-alter table stock
-add foreign key (locationId) references location(locationId);
-
-alter table stock
-add foreign key (productId) references product(productId);
 
 alter table orderDetail
 add foreign key (orderId) references orders(orderId);
@@ -142,4 +109,10 @@ add foreign key (addressId) references address(addressId);
 
 alter table location
 add foreign key (addressId) references address(addressId);
+
+alter table stock
+add foreign key (productId) references product(productId);
+
+alter table stock
+add foreign key (locationId) references location(locationId);
 

@@ -33,14 +33,4 @@ public class SupplierManagementService {
         Supplier supplier = repo.findById(id).orElseThrow(SupplierNotFoundException::new);
         repo.remove(supplier);
     }
-
-    @Transactional
-    public Supplier findByName(String name){
-        SupplierRepository repo = repositoryFactory.createSupplierRepository();
-        for(Supplier s: repo.findAll()){
-            if(s.getName().equals(name))
-                return s;
-        }
-        return null;
-    }
 }

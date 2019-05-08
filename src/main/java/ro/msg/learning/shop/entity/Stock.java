@@ -15,21 +15,21 @@ public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer stockId;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "stock_product",
-    joinColumns = {@JoinColumn(name = "stockId")},
-    inverseJoinColumns = {@JoinColumn(name = "productId")})
-    private List<Product> product;
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "stock_location",
-    joinColumns = {@JoinColumn(name = "stockId")},
-    inverseJoinColumns = {@JoinColumn(name = "locationId")})
-    private List<Location> location;
+
+    @ManyToOne
+    @JoinColumn(name = "productId", referencedColumnName = "productId")
+    private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "locationId", referencedColumnName = "locationId")
+    private Location location;
+
     private Integer quantity;
 
-    public Stock(List<Product> product, List<Location> location, Integer quantity){
+    public Stock(Product product, Location location, Integer quantity){
         this.product = product;
         this.location = location;
         this.quantity = quantity;
     }
+
 }

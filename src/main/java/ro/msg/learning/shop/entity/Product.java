@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,12 +20,21 @@ public class Product {
     private String description;
     private BigDecimal price;
     private double weight;
+
     @ManyToOne(optional = false)
     @JoinColumn(name ="productCategoryId", referencedColumnName = "productCategoryId")
     private ProductCategory productCategory;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "supplierId", referencedColumnName = "supplierId")
     private Supplier supplier;
+
+    @OneToMany(mappedBy = "product")
+    private List<Stock> stocks;
+
+    @OneToMany(mappedBy = "product")
+    private List<OrderDetail> orderDetails;
+
     private String imageURL;
 
     public Product(String name, String description, BigDecimal price, double weight, ProductCategory category, Supplier supplier, String imageURL){

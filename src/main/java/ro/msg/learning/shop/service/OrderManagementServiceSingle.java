@@ -19,9 +19,8 @@ public class OrderManagementServiceSingle implements OrderStrategy {
     @Override
     public Orders createOrder(LocalDateTime timestamp, Address deliveryAddress, Map<Integer, Integer> products) {
         List<Stock> stocks = repositoryFactory.createStockRepository().findAll();
-        stocks.forEach(s->{
-            
-        });
+        boolean containsAll = false;
+
         return null;
     }
 }

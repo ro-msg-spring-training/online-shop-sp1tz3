@@ -12,16 +12,16 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class CustomerController {
-    private final CustomerManagementService repo;
+    private final CustomerManagementService service;
 
     @GetMapping("/customers")
     List<Customer> all(){
-        return repo.listCustomers();
+        return service.listCustomers();
     }
 
     @PostMapping("/customers")
     Customer newCustomer(@RequestBody Customer newCustomer){
-        return repo.addCustomer(newCustomer.getFirstName(),
+        return service.addCustomer(newCustomer.getFirstName(),
                 newCustomer.getLastName(),
                 newCustomer.getUsername(),
                 newCustomer.getPassword(),
