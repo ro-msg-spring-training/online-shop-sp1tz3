@@ -3,13 +3,11 @@ package ro.msg.learning.shop.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ro.msg.learning.shop.dto.StockDTO;
-import ro.msg.learning.shop.entity.Location;
-import ro.msg.learning.shop.entity.Orders;
-import ro.msg.learning.shop.entity.Product;
-import ro.msg.learning.shop.entity.Stock;
-import ro.msg.learning.shop.repository.RepositoryFactory;
+import ro.msg.learning.shop.entity.*;
+import ro.msg.learning.shop.exception.StockNotFoundException;
 
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,21 +15,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OrderManagementServiceSingle{
     private final LocationManagementService locationService;
-    private final ProductManagementService productService;
-    private final RepositoryFactory repo;
+    private final StockManagementService stockService;
 
     @Transactional
-    public Orders createOrder() {
+    public Orders createOrder(LocalDateTime timestamp, Address deliveryAddress, ArrayList<Integer> products, ArrayList<Integer> quantities) {
         ArrayList<Location> locations = new ArrayList<>(locationService.listLocations());
-        ArrayList<Product> products = new ArrayList<>(productService.listProducts());
-        locations.forEach(l->{
-            System.out.println("location: " + l.getLocationId());
-            List<Stock> stocks = l.getStocks();
-            stocks.forEach(s->{
-                System.out.println(s.toString());
-            }
-            );
-        });
+        System.out.println(locationService.containsAll(products, quantities));
         return null;
     }
 }

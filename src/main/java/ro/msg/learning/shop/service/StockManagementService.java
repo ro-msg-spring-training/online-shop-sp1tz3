@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class StockManagementService {
-    private RepositoryFactory repositoryFactory;
+    private final RepositoryFactory repositoryFactory;
 
     @Transactional
     public List<Stock> listStocks(){
@@ -34,5 +34,13 @@ public class StockManagementService {
         StockRepository repo = repositoryFactory.createStockRepository();
         Stock stock = repo.findById(id).orElseThrow(StockNotFoundException::new);
         repo.remove(stock);
+    }
+
+    @Transactional
+    public Stock update(int id, Integer quantity){
+        StockRepository repo = repositoryFactory.createStockRepository();
+        Stock stock = repo.findById(id).orElseThrow(StockNotFoundException::new);
+        stock.setQuantity(quantity);
+        return repo.save(stock);
     }
 }
