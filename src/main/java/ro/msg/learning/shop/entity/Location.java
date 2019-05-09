@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -33,5 +34,10 @@ public class Location {
     public Location(String name, Address address){
         this.name = name;
         this.address = address;
+    }
+
+    @Override
+    public String toString(){
+        return "location id: " +locationId + ", name: " + name + ", " + address.toString();
     }
 }

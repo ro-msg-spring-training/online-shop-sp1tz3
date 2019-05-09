@@ -6,8 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ro.msg.learning.shop.entity.Location;
 import ro.msg.learning.shop.entity.Product;
 import ro.msg.learning.shop.entity.Stock;
-import ro.msg.learning.shop.exception.LocationNotFoundException;
-import ro.msg.learning.shop.exception.ProductNotFoundException;
 import ro.msg.learning.shop.exception.StockNotFoundException;
 import ro.msg.learning.shop.repository.RepositoryFactory;
 import ro.msg.learning.shop.repository.StockRepository;

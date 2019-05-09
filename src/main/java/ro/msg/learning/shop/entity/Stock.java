@@ -16,11 +16,11 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer stockId;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "productId", referencedColumnName = "productId")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "locationId", referencedColumnName = "locationId")
     private Location location;
 
@@ -30,6 +30,11 @@ public class Stock {
         this.product = product;
         this.location = location;
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString(){
+        return "stock id: " + stockId + ", "+ product.toString() + ", location: " + location.toString() + ", quantity: "+ quantity;
     }
 
 }

@@ -46,4 +46,9 @@ public class Product {
         this.supplier = supplier;
         this.imageURL = imageURL;
     }
+
+    @Override
+    public String toString(){
+        return "product id: "+ productId + ", name: "+ name + ", description: " + description + ", product category: "+ productCategory.getName() + ", supplier: " + supplier.getName() + ", image URL: " + imageURL;
+    }
 }

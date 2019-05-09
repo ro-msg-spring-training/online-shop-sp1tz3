@@ -20,12 +20,12 @@ public class OrderDetailManagementService {
         return repositoryFactory.createOrderDetailRepository().findAll();
     }
 
-   /* @Transactional
+    @Transactional
     public OrderDetail addOrderDetail(Orders order, Product product, Integer quantity){
         return repositoryFactory.createOrderDetailRepository().save(new OrderDetail(
                 order, product, quantity
         ));
-    }*/
+    }
 
     @Transactional
     public void removeOrderDetail(int id){

@@ -17,12 +17,12 @@ public class OrderDetail {
     private Integer orderDetailId;
 
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "orderId", referencedColumnName = "orderId")
     private Orders order;
 
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "productId", referencedColumnName = "productId")
     private Product product;
 

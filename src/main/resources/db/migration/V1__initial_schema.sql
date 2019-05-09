@@ -34,7 +34,7 @@ create table if not exists supplier(
 );
 
 create table if not exists stock(
-    stockId int not null,
+    stockId int auto_increment,
     productId int,
     locationId int,
     quantity int,
@@ -84,35 +84,35 @@ create table if not exists address(
 
 
 alter table orders
-add foreign key (customerId) references customer(customerId);
+add foreign key (customerId) references customer(customerId) on delete cascade;
 
 alter table orders
-add foreign key (shippedFrom) references location(locationId);
+add foreign key (shippedFrom) references location(locationId) on delete cascade;
 
 alter table revenue
-add foreign key (locationId) references location(locationId);
+add foreign key (locationId) references location(locationId) on delete cascade;
 
 alter table orderDetail
-add foreign key (orderId) references orders(orderId);
+add foreign key (orderId) references orders(orderId) on delete cascade;
 
 alter table orderDetail
-add foreign key (productId) references product(productId);
+add foreign key (productId) references product(productId) on delete cascade;
 
 alter table product
-add foreign key (productCategoryId) references productCategory(productCategoryId);
+add foreign key (productCategoryId) references productCategory(productCategoryId) on delete cascade;
 
 alter table product
-add foreign key (supplierId) references supplier(supplierId);
+add foreign key (supplierId) references supplier(supplierId) on delete cascade;
 
 alter table orders
-add foreign key (addressId) references address(addressId);
+add foreign key (addressId) references address(addressId) on delete cascade;
 
 alter table location
-add foreign key (addressId) references address(addressId);
+add foreign key (addressId) references address(addressId) on delete cascade;
 
 alter table stock
-add foreign key (productId) references product(productId);
+add foreign key (productId) references product(productId) on delete cascade;
 
 alter table stock
-add foreign key (locationId) references location(locationId);
+add foreign key (locationId) references location(locationId) on delete cascade;
 
