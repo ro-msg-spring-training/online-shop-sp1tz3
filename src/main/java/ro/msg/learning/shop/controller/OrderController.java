@@ -1,6 +1,8 @@
 package ro.msg.learning.shop.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.learning.shop.entity.Orders;
 import ro.msg.learning.shop.exception.OrderNotFoundException;
@@ -10,15 +12,17 @@ import ro.msg.learning.shop.service.OrderManagementServiceSingle;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 
-@RestController
+//well at least this mostly works
+//@RestController
 @RequiredArgsConstructor
 public class OrderController {
-    private final OrderManagementServiceSingle service;
+    private final OrderManagementServiceAbundant service;
 
     @PostMapping("/orders")
-    Orders createOrder(){
+    List<Orders> createOrder(){
         ArrayList<Integer> products = new ArrayList<>();
         products.add(1);
         products.add(3);

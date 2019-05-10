@@ -31,15 +31,17 @@ public class OrderManagementServiceSingle{
     }
 
     @Transactional
-    public Orders createOrder(LocalDateTime timestamp, Integer deliveryAddressId, List<Integer> products, List<Integer> quantities) {
+    public List<Orders> createOrder(LocalDateTime timestamp, Integer deliveryAddressId, List<Integer> products, List<Integer> quantities) {
         Location location = locationService.containsAll(products, quantities);
         Orders newOrder = new Orders();
         List<OrderDetail> newOrderDetails = new ArrayList<>();
+        List<Orders> allNewOrders = new ArrayList<>();
         if(location!= null){
             newOrder = repositoryFactory.createOrderRepository().save(
                     new Orders(location, repositoryFactory.createCustomerRepository().findById(1).orElseThrow(CustomerNotFoundException::new),
                             timestamp, repositoryFactory.createAddressRepository().findById(deliveryAddressId).orElseThrow(AddressNotFoundException::new))
             );
+            allNewOrders.add(newOrder);
         }
         for(Integer p: products){
             detailService.addOrderDetail(newOrder, productService.readById(p), quantities.get(products.indexOf(p)));
