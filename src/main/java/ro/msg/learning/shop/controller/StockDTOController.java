@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ro.msg.learning.shop.dto.StockDTO;
-import ro.msg.learning.shop.entity.Stock;
 import ro.msg.learning.shop.service.StockDTOManagementService;
 
 import java.util.List;

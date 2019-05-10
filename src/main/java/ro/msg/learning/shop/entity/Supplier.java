@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class Supplier {
     private Integer supplierId;
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "supplier")
     private List<Product> products;
 

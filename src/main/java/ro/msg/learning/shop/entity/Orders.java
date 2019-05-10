@@ -16,9 +16,11 @@ public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer orderId;
-    @ManyToOne
+
+    @ManyToOne(optional = false)
     @JoinColumn(name = "shippedFrom", referencedColumnName = "locationId")
     private Location location;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "customerId", referencedColumnName = "customerId")
     private Customer customer;
@@ -36,5 +38,10 @@ public class Orders {
         this.customer = customer;
         this.createdAt = createdAt;
         this.address = address;
+    }
+
+    @Override
+    public String toString(){
+        return orderId.toString();
     }
 }

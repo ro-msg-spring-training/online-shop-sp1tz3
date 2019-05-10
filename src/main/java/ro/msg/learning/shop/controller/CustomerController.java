@@ -3,8 +3,7 @@ package ro.msg.learning.shop.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.learning.shop.entity.Customer;
-import ro.msg.learning.shop.exception.CustomerNotFoundException;
-import ro.msg.learning.shop.repository.CustomerRepository;
+
 import ro.msg.learning.shop.service.CustomerManagementService;
 
 import java.util.List;

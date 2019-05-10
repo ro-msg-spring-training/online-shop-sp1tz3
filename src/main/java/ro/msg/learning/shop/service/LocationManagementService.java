@@ -35,29 +35,23 @@ public class LocationManagementService {
         repo.remove(location);
     }
 
-    //nu-i ok
     @Transactional
-    public boolean containsAll(List<Integer> products, List<Integer> quantities){
+    public Location containsAll(List<Integer> products, List<Integer> quantities){
         List<Location> locations = listLocations();
-        boolean ohYesItDoes = true;
-        for(Location l:locations){
-            ohYesItDoes = true;
+        int cnt = products.size();
+        for(Location l: locations){
             for(Stock s: l.getStocks()){
-                if(!products.contains(s.getProduct().getProductId())){
-                    ohYesItDoes = false;
-                    break;
-                }
-                else {
-                    int index = products.indexOf(s.getProduct().getProductId());
-                    if(quantities.get(index) > s.getQuantity()){
-                        ohYesItDoes = false;
-                        break;
-                    }
+                if(products.contains(s.getProduct().getProductId()) && s.getQuantity() >= quantities.get(products.indexOf(s.getProduct().getProductId()))){
+                    cnt--;
                 }
             }
-            if(ohYesItDoes)
-                break;
+            if(cnt==0){
+                return l;
+            } else {
+                cnt = products.size();
+            }
         }
-        return ohYesItDoes;
+        return null;
     }
+
 }

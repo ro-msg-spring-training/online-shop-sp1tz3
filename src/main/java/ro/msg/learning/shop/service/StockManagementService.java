@@ -43,4 +43,19 @@ public class StockManagementService {
         stock.setQuantity(quantity);
         return repo.save(stock);
     }
+
+    public Stock containsaMostProduct(int productId, int quantity){
+        List<Stock> stocks = listStocks();
+        int maxContainedNb = 0;
+        for(Stock s: stocks){
+            if(s.getProduct().getProductId().equals(productId) && s.getQuantity() >= quantity && s.getQuantity() > maxContainedNb){
+                maxContainedNb = s.getQuantity();
+            }
+        }
+        for(Stock s: stocks){
+            if(s.getProduct().getProductId().equals(productId) && s.getQuantity().equals(maxContainedNb))
+                return s;
+        }
+        return null;
+    }
 }

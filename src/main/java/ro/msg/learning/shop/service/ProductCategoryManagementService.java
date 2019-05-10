@@ -8,7 +8,6 @@ import ro.msg.learning.shop.exception.ProductCategoryNotFoundException;
 import ro.msg.learning.shop.repository.ProductCategoryRepository;
 import ro.msg.learning.shop.repository.RepositoryFactory;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service

@@ -34,4 +34,9 @@ public class OrderDetail {
         this.product= product;
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString(){
+        return "order detail id: " + orderDetailId + " orderId: " + order.getOrderId() + " product id: " + product.getProductId() + " quantity: " + quantity;
+    }
 }
