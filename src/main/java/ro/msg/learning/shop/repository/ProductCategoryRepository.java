@@ -9,5 +9,4 @@ public interface ProductCategoryRepository {
     ProductCategory save(ProductCategory productCategory);
     void remove(ProductCategory productCategory);
     Optional<ProductCategory> findById(int id);
-    ProductCategory findByName(String name);
 }

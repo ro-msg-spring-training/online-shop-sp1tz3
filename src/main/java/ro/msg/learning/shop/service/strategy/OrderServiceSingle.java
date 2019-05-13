@@ -8,6 +8,7 @@ import ro.msg.learning.shop.entity.Orders;
 import ro.msg.learning.shop.entity.Stock;
 import ro.msg.learning.shop.exception.AddressNotFoundException;
 import ro.msg.learning.shop.exception.CustomerNotFoundException;
+import ro.msg.learning.shop.exception.OrderNotCreatedException;
 import ro.msg.learning.shop.repository.RepositoryFactory;
 import ro.msg.learning.shop.service.LocationManagementService;
 import ro.msg.learning.shop.service.OrderDetailManagementService;
@@ -32,7 +33,7 @@ public class OrderServiceSingle implements OrderStrategy{
 
     @Override
     @Transactional
-    public List<Orders> createOrder(LocalDateTime timestamp, Integer deliveryAddressId, List<Integer> products, List<Integer> quantities) {
+    public List<Orders> createOrder(LocalDateTime timestamp, Integer deliveryAddressId, List<Integer> products, List<Integer> quantities){
         Location location = locationService.containsAll(products, quantities);
         Orders newOrder = new Orders();
         List<OrderDetail> newOrderDetails = new ArrayList<>();
@@ -52,6 +53,6 @@ public class OrderServiceSingle implements OrderStrategy{
             }
             detailService.addOrderDetail(newOrder, productService.readById(p), quantities.get(products.indexOf(p)));
         }
-        return null;
+        return allNewOrders;
     }
 }

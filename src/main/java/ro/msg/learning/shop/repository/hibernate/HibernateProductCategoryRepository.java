@@ -42,7 +42,6 @@ public class HibernateProductCategoryRepository implements ProductCategoryReposi
         return Optional.ofNullable(entityManager.find(ProductCategory.class, id));
     }
 
-    @Override
     public ProductCategory findByName(String name){
         return (ProductCategory)entityManager.createQuery("select pc from productCategory pc where pc.name like :pcname").setParameter("pcname", name).getSingleResult();
 

@@ -23,6 +23,7 @@ public class Location {
     @JoinColumn(name = "addressId", referencedColumnName = "addressId")
     private Address address;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "location")
     private List<Stock> stocks;
 

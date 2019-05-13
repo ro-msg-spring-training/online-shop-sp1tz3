@@ -17,10 +17,12 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer stockId;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "productId", referencedColumnName = "productId")
     private Product product;
 
+    @JsonIgnore
     @ManyToOne(optional = false)
     @JoinColumn(name = "locationId", referencedColumnName = "locationId")
     private Location location;

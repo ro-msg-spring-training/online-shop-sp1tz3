@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -26,10 +27,11 @@ public class Orders {
     private Customer customer;
     private LocalDateTime createdAt;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "addressId", referencedColumnName = "addressId")
     private Address address;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
 

@@ -53,5 +53,4 @@ public class LocationManagementService {
         }
         return null;
     }
-
 }

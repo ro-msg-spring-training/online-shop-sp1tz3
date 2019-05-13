@@ -17,7 +17,6 @@ public class OrderConfiguration {
     @Bean
     public OrderStrategy myStrategy(){
         String strategy = env.getProperty("strategy");
-        OrderStrategy myStrategy = null;
         switch(strategy){
             case "single_location":
                 return new OrderServiceSingle();
