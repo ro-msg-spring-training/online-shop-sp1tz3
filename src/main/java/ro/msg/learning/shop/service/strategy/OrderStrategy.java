@@ -1,4 +1,4 @@
-package ro.msg.learning.shop.service;
+package ro.msg.learning.shop.service.strategy;
 
 import ro.msg.learning.shop.entity.Address;
 import ro.msg.learning.shop.entity.Orders;

@@ -1,20 +1,22 @@
-package ro.msg.learning.shop.service;
+package ro.msg.learning.shop.service.strategy;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import ro.msg.learning.shop.entity.Address;
 import ro.msg.learning.shop.entity.Location;
 import ro.msg.learning.shop.entity.Orders;
 import ro.msg.learning.shop.exception.AddressNotFoundException;
 import ro.msg.learning.shop.exception.CustomerNotFoundException;
 import ro.msg.learning.shop.repository.RepositoryFactory;
+import ro.msg.learning.shop.service.LocationManagementService;
+import ro.msg.learning.shop.service.OrderDetailManagementService;
+import ro.msg.learning.shop.service.ProductManagementService;
+import ro.msg.learning.shop.service.StockManagementService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderSingle implements OrderStrategy{
+public class OrderServiceAbundant implements OrderStrategy{
     @Autowired
     private RepositoryFactory repositoryFactory;
     @Autowired
@@ -29,12 +31,12 @@ public class OrderSingle implements OrderStrategy{
     @Override
     @Transactional
     public List<Orders> createOrder(LocalDateTime timestamp, Integer deliveryAddress, List<Integer> products, List<Integer> quantities) {
-        Location ol = new Location();
-        Orders newOrder = new Orders();
+        Location ol;
+        Orders newOrder;
         List<Orders> allNewOrders = new ArrayList<>();
         for(Integer p: products){
-            ol = (stockService.containsaMostProduct(p, quantities.get(products.indexOf(p))).getLocation());
-            newOrder = (repositoryFactory.createOrderRepository().save(new Orders(ol, repositoryFactory.createCustomerRepository().findById(1).orElseThrow(CustomerNotFoundException::new), timestamp, repositoryFactory.createAddressRepository().findById(deliveryAddress).orElseThrow(AddressNotFoundException::new))));
+            ol = stockService.containsaMostProduct(p, quantities.get(products.indexOf(p))).getLocation();
+            newOrder = repositoryFactory.createOrderRepository().save(new Orders(ol, repositoryFactory.createCustomerRepository().findById(1).orElseThrow(CustomerNotFoundException::new), timestamp, repositoryFactory.createAddressRepository().findById(deliveryAddress).orElseThrow(AddressNotFoundException::new)));
             detailService.addOrderDetail(newOrder, productService.readById(p), quantities.get(products.indexOf(p)));
             allNewOrders.add(newOrder);
         };

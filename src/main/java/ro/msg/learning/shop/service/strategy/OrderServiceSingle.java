@@ -1,35 +1,36 @@
-package ro.msg.learning.shop.service;
+package ro.msg.learning.shop.service.strategy;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import ro.msg.learning.shop.entity.*;
+import ro.msg.learning.shop.entity.Location;
+import ro.msg.learning.shop.entity.OrderDetail;
+import ro.msg.learning.shop.entity.Orders;
+import ro.msg.learning.shop.entity.Stock;
 import ro.msg.learning.shop.exception.AddressNotFoundException;
 import ro.msg.learning.shop.exception.CustomerNotFoundException;
-import ro.msg.learning.shop.exception.StockNotFoundException;
 import ro.msg.learning.shop.repository.RepositoryFactory;
+import ro.msg.learning.shop.service.LocationManagementService;
+import ro.msg.learning.shop.service.OrderDetailManagementService;
+import ro.msg.learning.shop.service.ProductManagementService;
+import ro.msg.learning.shop.service.StockManagementService;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class OrderManagementServiceSingle{
-    private final LocationManagementService locationService;
-    private final StockManagementService stockService;
-    private final OrderDetailManagementService detailService;
-    private final ProductManagementService productService;
-    private final CustomerManagementService customerService;
-    private final RepositoryFactory repositoryFactory;
+public class OrderServiceSingle implements OrderStrategy{
+    @Autowired
+    private RepositoryFactory repositoryFactory;
+    @Autowired
+    private LocationManagementService locationService;
+    @Autowired
+    private StockManagementService stockService;
+    @Autowired
+    private OrderDetailManagementService detailService;
+    @Autowired
+    private ProductManagementService productService;
 
-    @Transactional
-    public List<Orders> listOrders(){
-        return repositoryFactory.createOrderRepository().findAll();
-    }
-
+    @Override
     @Transactional
     public List<Orders> createOrder(LocalDateTime timestamp, Integer deliveryAddressId, List<Integer> products, List<Integer> quantities) {
         Location location = locationService.containsAll(products, quantities);
@@ -44,9 +45,13 @@ public class OrderManagementServiceSingle{
             allNewOrders.add(newOrder);
         }
         for(Integer p: products){
+            for(Stock s: location.getStocks()){
+                if(s.getProduct().getProductId().equals(p)){
+                    stockService.update(s.getStockId(), s.getQuantity() - quantities.get(products.indexOf(p)));
+                }
+            }
             detailService.addOrderDetail(newOrder, productService.readById(p), quantities.get(products.indexOf(p)));
         }
-
         return null;
     }
 }

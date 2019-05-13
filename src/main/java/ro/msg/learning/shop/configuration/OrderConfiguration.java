@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
-import ro.msg.learning.shop.service.*;
+import ro.msg.learning.shop.service.strategy.OrderServiceAbundant;
+import ro.msg.learning.shop.service.strategy.OrderServiceSingle;
+import ro.msg.learning.shop.service.strategy.OrderStrategy;
 
 @Configuration
 public class OrderConfiguration {
@@ -18,9 +20,9 @@ public class OrderConfiguration {
         OrderStrategy myStrategy = null;
         switch(strategy){
             case "single_location":
-                return new OrderSingle();
+                return new OrderServiceSingle();
             case "most_abundant":
-                return new OrderAbundant();
+                return new OrderServiceAbundant();
         }
         return null;
     };
