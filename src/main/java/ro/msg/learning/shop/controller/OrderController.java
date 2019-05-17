@@ -12,7 +12,7 @@ public class OrderController {
     private final OrderService service;
 
     @PostMapping("/orders")
-    public Orders createOrder(@RequestBody OrderInputDTO dto){
+    private Orders createOrder(@RequestBody OrderInputDTO dto){
         return service.createOrder(dto);
     }
 }

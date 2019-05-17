@@ -13,17 +13,17 @@ public class ProductController {
     private final ProductService service;
 
     @GetMapping("/products")
-    List<ProductDTO> all(){
+    private List<ProductDTO> all(){
         return service.listProducts();
     }
 
     @PostMapping("/products")
-    ProductDTO addProduct(@RequestBody ProductDTO newProductDTO){
+    private ProductDTO addProduct(@RequestBody ProductDTO newProductDTO){
         return service.createProduct(newProductDTO);
     }
 
     @PutMapping("/products")
-    ProductDTO updateProduct(@RequestBody ProductDTO newProduct){
+    private ProductDTO updateProduct(@RequestBody ProductDTO newProduct){
         return (service.updateProduct(
                 newProduct.getId(),
                 newProduct.getName(),
@@ -37,12 +37,12 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    ProductDTO readById(@PathVariable int id){
+    private ProductDTO readById(@PathVariable int id){
         return service.readById(id);
     }
 
     @DeleteMapping("/products/{id}")
-    void deleteProduct(@PathVariable int id){
+    private void deleteProduct(@PathVariable int id){
         service.deleteProduct(id);
     }
 }
