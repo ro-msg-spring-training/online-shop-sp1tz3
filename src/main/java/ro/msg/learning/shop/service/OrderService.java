@@ -32,7 +32,7 @@ public class OrderService {
         try {
             outputs = strategy.makeOrderOutputDTO(input);
         }catch(Exception e){
-            e.printStackTrace();
+           e.printStackTrace();
         }
 
         Orders newOrder = new Orders(
