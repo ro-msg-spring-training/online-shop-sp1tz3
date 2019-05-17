@@ -1,28 +1,41 @@
 package ro.msg.learning.shop.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import ro.msg.learning.shop.service.strategy.OrderServiceAbundant;
-import ro.msg.learning.shop.service.strategy.OrderServiceSingle;
+import ro.msg.learning.shop.repository.LocationRepository;
+import ro.msg.learning.shop.repository.ProductRepository;
+import ro.msg.learning.shop.repository.StockRepository;
+import ro.msg.learning.shop.service.LocationService;
+import ro.msg.learning.shop.service.StockService;
+import ro.msg.learning.shop.service.strategy.OrderStrategyAbundant;
+import ro.msg.learning.shop.service.strategy.OrderStrategySingle;
 import ro.msg.learning.shop.service.strategy.OrderStrategy;
 
 @Configuration
 public class OrderConfiguration {
 
     @Autowired
-    Environment env;
+    private ProductRepository productRepository;
+    @Autowired
+    private LocationRepository locationRepository;
+    @Autowired
+    private StockRepository stockRepository;
 
     @Bean
-    public OrderStrategy myStrategy(){
-        String strategy = env.getProperty("strategy");
+    public OrderStrategy selectStrategy(@Value("${strategy}") Strategies strategy){
         switch(strategy){
-            case "single_location":
-                return new OrderServiceSingle();
-            case "most_abundant":
-                return new OrderServiceAbundant();
+            case SINGLE:
+                return new OrderStrategySingle(productRepository, new LocationService(locationRepository));
+            case ABUNDANT:
+                return new OrderStrategyAbundant(productRepository, new StockService(stockRepository));
+
+            default: return null;
         }
-        return null;
-    };
+    }
+    private enum Strategies{
+        SINGLE, ABUNDANT
+    }
 }
+

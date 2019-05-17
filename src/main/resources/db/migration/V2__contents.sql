@@ -28,3 +28,4 @@ insert into stock values (3,1,1,1002);
 insert into stock values (4,3,2,1000);
 
 
+

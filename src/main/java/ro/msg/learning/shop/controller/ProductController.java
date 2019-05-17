@@ -3,15 +3,14 @@ package ro.msg.learning.shop.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.learning.shop.dto.ProductDTO;
-import ro.msg.learning.shop.entity.Product;
-import ro.msg.learning.shop.service.ProductDTOManagementService;
+import ro.msg.learning.shop.service.ProductService;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class ProductDTOController {
-    private final ProductDTOManagementService service;
+public class ProductController {
+    private final ProductService service;
 
     @GetMapping("/products")
     List<ProductDTO> all(){
@@ -19,15 +18,13 @@ public class ProductDTOController {
     }
 
     @PostMapping("/products")
-    ProductDTO newProduct(@RequestBody ProductDTO newProductDTO){
-        return service.create(
-                newProductDTO
-        );
+    ProductDTO addProduct(@RequestBody ProductDTO newProductDTO){
+        return service.createProduct(newProductDTO);
     }
 
     @PutMapping("/products")
     ProductDTO updateProduct(@RequestBody ProductDTO newProduct){
-        return (service.update(
+        return (service.updateProduct(
                 newProduct.getId(),
                 newProduct.getName(),
                 newProduct.getDescription(),
@@ -46,6 +43,6 @@ public class ProductDTOController {
 
     @DeleteMapping("/products/{id}")
     void deleteProduct(@PathVariable int id){
-        service.delete(id);
+        service.deleteProduct(id);
     }
 }

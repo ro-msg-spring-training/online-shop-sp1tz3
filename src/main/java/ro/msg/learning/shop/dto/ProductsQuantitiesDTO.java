@@ -1,12 +1,13 @@
 package ro.msg.learning.shop.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class OrderDTO {
+@AllArgsConstructor
+public class ProductsQuantitiesDTO {
     private List<Integer> products;
     private List<Integer> quantities;
-    private Integer deliveryAddressId;
 }
