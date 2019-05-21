@@ -23,7 +23,7 @@ public class Location {
     private Address address;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "location")
+    @OneToMany(mappedBy = "location",fetch = FetchType.EAGER)
     private List<Stock> stocks;
 
     @JsonIgnore

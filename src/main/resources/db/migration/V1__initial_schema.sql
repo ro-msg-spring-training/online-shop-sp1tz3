@@ -3,7 +3,7 @@ create table if not exists customer(
     firstName varchar(32) not null,
     lastName varchar(32) not null,
     username varchar(32) not null,
-    password varchar(32),
+    password varchar(100),
     emailAddress varchar(64),
     primary key (customerId)
 );

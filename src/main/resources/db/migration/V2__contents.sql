@@ -1,6 +1,3 @@
-insert into customer (customerId, firstName, lastName, username, password, emailAddress) values (1,'a','a','a','a','a');
-insert into customer values (2,'b','b','b','b','b');
-
 insert into productCategory values (1,'cat1','descr');
 insert into productCategory values (2,'cat2','descr');
 insert into productCategory values (3,'cat3','descr');

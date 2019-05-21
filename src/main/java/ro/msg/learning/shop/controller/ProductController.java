@@ -1,8 +1,10 @@
 package ro.msg.learning.shop.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.learning.shop.dto.ProductDTO;
+import ro.msg.learning.shop.repository.CustomerRepository;
 import ro.msg.learning.shop.service.ProductService;
 
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService service;
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @GetMapping("/products")
     private List<ProductDTO> all(){
