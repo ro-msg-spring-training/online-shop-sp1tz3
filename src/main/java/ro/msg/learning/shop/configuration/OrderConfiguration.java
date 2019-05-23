@@ -7,15 +7,12 @@ import org.springframework.context.annotation.Configuration;
 import ro.msg.learning.shop.repository.LocationRepository;
 import ro.msg.learning.shop.repository.ProductRepository;
 import ro.msg.learning.shop.repository.StockRepository;
-import ro.msg.learning.shop.service.LocationService;
-import ro.msg.learning.shop.service.StockService;
 import ro.msg.learning.shop.service.strategy.OrderStrategyAbundant;
 import ro.msg.learning.shop.service.strategy.OrderStrategySingle;
 import ro.msg.learning.shop.service.strategy.OrderStrategy;
 
 @Configuration
 public class OrderConfiguration {
-
     @Autowired
     private ProductRepository productRepository;
     @Autowired
@@ -27,9 +24,9 @@ public class OrderConfiguration {
     public OrderStrategy selectStrategy(@Value("${strategy}") Strategies strategy){
         switch(strategy){
             case SINGLE:
-                return new OrderStrategySingle(productRepository, new LocationService(locationRepository));
+                return new OrderStrategySingle(productRepository,locationRepository);
             case ABUNDANT:
-                return new OrderStrategyAbundant(productRepository, new StockService(stockRepository));
+                return new OrderStrategyAbundant(productRepository, locationRepository);
 
             default: return null;
         }

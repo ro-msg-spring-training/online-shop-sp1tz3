@@ -5,24 +5,17 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import ro.msg.learning.shop.dto.OrderInputDTO;
 import ro.msg.learning.shop.dto.ProductsQuantitiesDTO;
 import ro.msg.learning.shop.entity.Address;
 import ro.msg.learning.shop.entity.Location;
-import ro.msg.learning.shop.entity.Orders;
 
-import ro.msg.learning.shop.exception.OrderNotFoundException;
 import ro.msg.learning.shop.repository.*;
 import ro.msg.learning.shop.service.LocationService;
-import ro.msg.learning.shop.service.OrderService;
 import ro.msg.learning.shop.service.StockService;
-import ro.msg.learning.shop.service.strategy.OrderStrategy;
-import ro.msg.learning.shop.service.strategy.OrderStrategyAbundant;
-import ro.msg.learning.shop.service.strategy.OrderStrategySingle;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -33,14 +26,6 @@ public class ShopApplicationTests {
 	private AddressRepository adrRepo;
 	@Autowired
 	private StockRepository stockRepo;
-	@Autowired
-	private CustomerRepository custRepo;
-	@Autowired
-	private OrderDetailRepository orderDetailRepository;
-	@Autowired
-	private OrderRepository orderRepository;
-	@Autowired
-	private ProductRepository productRepository;
 
 	@Test
 	public void addLocation(){
@@ -61,47 +46,25 @@ public class ShopApplicationTests {
 		List<Integer> quantities = new ArrayList<>();
 		products.add(1); products.add(3);
 		quantities.add(50); quantities.add(100);
-		ProductsQuantitiesDTO dto = new ProductsQuantitiesDTO(products, quantities);
-		Location location = locationService.findSingleLocation(dto);
-		assert location.getLocationId().equals(2);
+		List<Location> locations = new ArrayList<>();
+		products.forEach(p->{
+			locations.addAll(locRepo.findSingleLocation(p,quantities.get(products.indexOf(p))));
+		});
+		List<Location> distinctLocations = locations.stream().distinct().collect(Collectors.toList());
+		Location neededLocation = locationService.findSingleLocation(new ProductsQuantitiesDTO(products, quantities));
+		assert distinctLocations.contains(neededLocation);
 	}
 
 	@Test
 	public void abundantLocation(){
 		StockService stockService = new StockService(stockRepo);
-		assert stockService.containsMostProduct(1,50).getLocation().getLocationId().equals(1);
-		assert stockService.containsMostProduct(2,1000).getLocation().getLocationId().equals(3);
-		assert stockService.containsMostProduct(3, 1000).getLocation().getLocationId().equals(2);
-	}
-
-	@Test
-	public void createOrderSingleLocation(){
-		LocationService locationService = new LocationService(locRepo);
-		OrderStrategy strategy = new OrderStrategySingle(productRepository, locationService);
-		OrderService orderService = new OrderService(strategy, custRepo, orderDetailRepository,adrRepo,stockRepo,orderRepository);
 		List<Integer> products = new ArrayList<>();
 		List<Integer> quantities = new ArrayList<>();
 		products.add(1); products.add(3);
 		quantities.add(50); quantities.add(100);
-		ProductsQuantitiesDTO dto = new ProductsQuantitiesDTO(products, quantities);
-		OrderInputDTO inputDTO = new OrderInputDTO(LocalDateTime.now(),1,dto);
-		Orders newOrder = orderService.createOrder(inputDTO);
-		assert orderRepository.findById(newOrder.getOrderId()).orElseThrow(OrderNotFoundException::new).equals(newOrder);
+		List<Location> locations = new ArrayList<>();
+		products.forEach(p->{
+			assert stockService.containsMostProduct(p, quantities.get(products.indexOf(p))).getLocation().equals(locRepo.findAbundantLocation(p, quantities.get(products.indexOf(p))).get(0));
+		});
 	}
-
-	@Test
-	public void createOrderAbundantLocation(){
-		StockService stockService = new StockService(stockRepo);
-		OrderStrategy strategy = new OrderStrategyAbundant(productRepository, stockService);
-		OrderService orderService = new OrderService(strategy, custRepo, orderDetailRepository, adrRepo, stockRepo, orderRepository);
-		List<Integer> products = new ArrayList<>();
-		List<Integer> quantities = new ArrayList<>();
-		products.add(1); products.add(3);
-		quantities.add(50); quantities.add(100);
-		ProductsQuantitiesDTO dto = new ProductsQuantitiesDTO(products, quantities);
-		OrderInputDTO inputDTO = new OrderInputDTO(LocalDateTime.now(),1,dto);
-		Orders newOrder = orderService.createOrder(inputDTO);
-		assert orderRepository.findById(newOrder.getOrderId()).orElseThrow(OrderNotFoundException::new).equals(newOrder);
-	}
-
 }

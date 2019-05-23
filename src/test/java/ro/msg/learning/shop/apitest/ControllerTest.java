@@ -8,9 +8,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ro.msg.learning.shop.dto.OrderInputDTO;
 import ro.msg.learning.shop.dto.ProductDTO;
 import ro.msg.learning.shop.dto.ProductsQuantitiesDTO;
-import ro.msg.learning.shop.entity.Orders;
 import ro.msg.learning.shop.repository.*;
-import ro.msg.learning.shop.service.LocationService;
 import ro.msg.learning.shop.service.OrderService;
 import ro.msg.learning.shop.service.StockService;
 import ro.msg.learning.shop.service.strategy.OrderStrategy;
@@ -37,7 +35,6 @@ public class ControllerTest extends AbstractTest{
     @Autowired
     private AddressRepository addressRepository;
 
-
     @Override
     @Before
     public void setUp(){
@@ -45,7 +42,7 @@ public class ControllerTest extends AbstractTest{
     }
 
     @Test
-    public void listPorudcts() throws Exception{
+    public void listProducts() throws Exception{
         String uri = "/products";
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
@@ -63,8 +60,7 @@ public class ControllerTest extends AbstractTest{
     @Test
     public void createOrderSingle() throws Exception{
         String uri = "/orders";
-        LocationService locationService = new LocationService(locationRepository);
-        OrderStrategy strategy = new OrderStrategySingle(productRepository, locationService);
+        OrderStrategy strategy = new OrderStrategySingle(productRepository, locationRepository);
         OrderService orderService = new OrderService(strategy, customerRepository, orderDetailRepository,addressRepository,stockRepository,orderRepository);
         List<Integer> products = new ArrayList<>();
         List<Integer> quantities = new ArrayList<>();
@@ -72,7 +68,7 @@ public class ControllerTest extends AbstractTest{
         quantities.add(50); quantities.add(100);
         ProductsQuantitiesDTO dto = new ProductsQuantitiesDTO(products, quantities);
         OrderInputDTO inputDTO = new OrderInputDTO(LocalDateTime.now(),1,dto);
-        Orders newOrder = orderService.createOrder(inputDTO);
+       // Orders newOrder = orderService.createOrder(inputDTO);
         String inp = "{\n" +
                 "        \"timestamp\": \"2001-05-21T14:09\",\n" +
                 "        \"deliveryAddressId\": 3,\n" +
@@ -92,7 +88,7 @@ public class ControllerTest extends AbstractTest{
     public void createOrderAbundant() throws Exception{
         String uri = "/orders";
         StockService stockService = new StockService(stockRepository);
-        OrderStrategy strategy = new OrderStrategyAbundant(productRepository, stockService);
+        OrderStrategy strategy = new OrderStrategyAbundant(productRepository, locationRepository);
         OrderService orderService = new OrderService(strategy, customerRepository, orderDetailRepository,addressRepository,stockRepository,orderRepository);
         List<Integer> products = new ArrayList<>();
         List<Integer> quantities = new ArrayList<>();
