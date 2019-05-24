@@ -20,7 +20,6 @@ public class CustomerUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) {
         Customer customer = customerRepository.findByUsername(s).orElseThrow(CustomerNotFoundException::new);
-        String password = customer.getPassword();
         return new User(customer.getUsername(), customer.getPassword(),
                 Collections.singletonList(new SimpleGrantedAuthority("USER")));
     }

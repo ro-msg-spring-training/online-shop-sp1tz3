@@ -11,7 +11,7 @@ import ro.msg.learning.shop.repository.CustomerRepository;
 @RequiredArgsConstructor
 public class CustomersWithEncodedPasswords implements CommandLineRunner {
     private final CustomerRepository customerRepository;
-    private final PasswordEncoder passwordEncoder;
+    //private final PasswordEncoder passwordEncoder;
 
 
     @Override
