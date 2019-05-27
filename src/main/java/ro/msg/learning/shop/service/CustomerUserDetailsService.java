@@ -21,6 +21,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) {
         Customer customer = customerRepository.findByUsername(s).orElseThrow(CustomerNotFoundException::new);
         return new User(customer.getUsername(), customer.getPassword(),
-                Collections.singletonList(new SimpleGrantedAuthority("USER")));
+                Collections.singletonList(new SimpleGrantedAuthority("ADMIN")));
     }
 }
+

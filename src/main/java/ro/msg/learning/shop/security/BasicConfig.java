@@ -26,7 +26,7 @@ public class BasicConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic().authenticationEntryPoint(authenticationEntryPoint);
-        http.headers().frameOptions().disable();
+        //http.headers().frameOptions().disable();
     }
 
     @Override

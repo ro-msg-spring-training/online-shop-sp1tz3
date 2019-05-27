@@ -1,4 +1,4 @@
-package ro.msg.learning.shop.apitest;
+package ro.msg.learning.shop.apiTest;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;

@@ -39,6 +39,12 @@ public class Location {
         this.address = address;
     }
 
+    public Location(int locationId, String name, Address address){
+        this.locationId = locationId;
+        this.name = name;
+        this.address = address;
+    }
+
     @Override
     public String toString(){
         return "location id: " +locationId + ", name: " + name + ", " + address.toString();

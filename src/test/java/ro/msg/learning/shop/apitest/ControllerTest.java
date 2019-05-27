@@ -1,4 +1,4 @@
-package ro.msg.learning.shop.apitest;
+package ro.msg.learning.shop.apiTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,6 @@ public class ControllerTest extends AbstractTest{
         quantities.add(50); quantities.add(100);
         ProductsQuantitiesDTO dto = new ProductsQuantitiesDTO(products, quantities);
         OrderInputDTO inputDTO = new OrderInputDTO(LocalDateTime.now(),1,dto);
-       // Orders newOrder = orderService.createOrder(inputDTO);
         String inp = "{\n" +
                 "        \"timestamp\": \"2001-05-21T14:09\",\n" +
                 "        \"deliveryAddressId\": 3,\n" +
@@ -96,7 +95,6 @@ public class ControllerTest extends AbstractTest{
         quantities.add(50); quantities.add(100);
         ProductsQuantitiesDTO dto = new ProductsQuantitiesDTO(products, quantities);
         OrderInputDTO inputDTO = new OrderInputDTO(LocalDateTime.now(),1,dto);
-        //Orders newOrder = orderService.createOrder(inputDTO);
         String inp = "{\n" +
                 "        \"timestamp\": \"2001-05-21T14:09\",\n" +
                 "        \"deliveryAddressId\": 3,\n" +

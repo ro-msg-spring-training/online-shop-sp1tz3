@@ -23,13 +23,11 @@ public class OrderStrategySingle implements OrderStrategy{
         List<OrderOutputDTO> orderOutputDTOS = new ArrayList<>();
         List<Integer> products = input.getProductsQuantitiesDTO().getProducts();
         List<Integer> quantities = input.getProductsQuantitiesDTO().getQuantities();
-        List<Location> potentialLocations = new ArrayList<>();
-        for(Integer p: products)
-            potentialLocations.addAll(locationRepository.findSingleLocation(p, quantities.get(products.indexOf(p))));
-        potentialLocations = potentialLocations.stream().distinct().collect(Collectors.toList());
-        Location foundLocation = null;
+        final List<Location> potentialLocations = new ArrayList<>();
+        products.forEach(p->potentialLocations.addAll(locationRepository.findSingleLocation(p, quantities.get(products.indexOf(p)))));
         int cnt = input.getProductsQuantitiesDTO().getProducts().size();
-        for(Location l: potentialLocations){
+        Location foundLocation = null;
+        for(Location l: potentialLocations.stream().distinct().collect(Collectors.toList())){
             for(Stock s: l.getStocks()){
                 if(products.contains(s.getProduct().getProductId()) && s.getQuantity() >= quantities.get(products.indexOf(s.getProduct().getProductId())))
                     cnt--;
@@ -41,10 +39,12 @@ public class OrderStrategySingle implements OrderStrategy{
                 cnt = products.size();
             }
         }
-        for(Integer p: products)
-            orderOutputDTOS.add(new OrderOutputDTO(foundLocation,
+        final Location neededLocation = foundLocation;
+        products.stream().forEach(p->
+            orderOutputDTOS.add(new OrderOutputDTO(neededLocation,
                     productRepository.findById(p).orElseThrow(ProductNotFoundException::new),
-                    quantities.get(products.indexOf(p))));
+                    quantities.get(products.indexOf(p))))
+        );
         return orderOutputDTOS;
     }
 }

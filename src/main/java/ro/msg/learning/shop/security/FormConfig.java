@@ -32,10 +32,7 @@ public class FormConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin()
-                .and()
-                .httpBasic()
-                .authenticationEntryPoint(authenticationEntryPoint);
+                .formLogin();
         http.headers().frameOptions().disable();
     }
 
