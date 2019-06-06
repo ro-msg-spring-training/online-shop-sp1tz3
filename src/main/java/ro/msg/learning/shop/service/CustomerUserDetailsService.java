@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.service;
 
+/*
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -24,4 +25,7 @@ public class CustomerUserDetailsService implements UserDetailsService {
                 Collections.singletonList(new SimpleGrantedAuthority("ADMIN")));
     }
 }
+
+ */
+
 

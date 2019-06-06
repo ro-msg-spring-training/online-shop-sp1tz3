@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import ro.msg.learning.shop.repository.LocationRepository;
 import ro.msg.learning.shop.repository.ProductRepository;
 import ro.msg.learning.shop.service.strategy.OrderStrategyAbundant;
+import ro.msg.learning.shop.service.strategy.OrderStrategyProximity;
 import ro.msg.learning.shop.service.strategy.OrderStrategySingle;
 import ro.msg.learning.shop.service.strategy.OrderStrategy;
 
@@ -23,12 +24,13 @@ public class OrderConfiguration {
                 return new OrderStrategySingle(productRepository,locationRepository);
             case ABUNDANT:
                 return new OrderStrategyAbundant(productRepository, locationRepository);
-
+            case PROXIMITY:
+                return new OrderStrategyProximity(productRepository, locationRepository);
             default: return null;
         }
     }
     private enum Strategies{
-        SINGLE, ABUNDANT
+        SINGLE, ABUNDANT, PROXIMITY
     }
 }
 

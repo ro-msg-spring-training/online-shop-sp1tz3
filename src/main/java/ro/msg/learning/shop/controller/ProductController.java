@@ -1,7 +1,6 @@
 package ro.msg.learning.shop.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ro.msg.learning.shop.dto.ProductDTO;
 import ro.msg.learning.shop.repository.CustomerRepository;

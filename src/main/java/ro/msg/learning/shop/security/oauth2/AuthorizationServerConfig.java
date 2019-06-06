@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.security.oauth2;
 
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -37,3 +38,4 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
 }
+*/

@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.security;
 
+/*
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -41,3 +42,5 @@ public class FormConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 }
+
+ */
